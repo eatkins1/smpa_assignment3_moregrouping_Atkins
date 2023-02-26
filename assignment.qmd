@@ -78,11 +78,6 @@ impeach %>%
 
 #exact same as previous but replacing gdp_above_national with pct_bachelors_compared_to_national
 
-
-
-
-
-
 ```
 
 4)  Let's look at the college graduation comparison in a slightly different way.  
@@ -120,13 +115,12 @@ impeach %>%
 
 ```{r}
 
-  
+impeach %>% 
+  filter(for_impeachment == "YES") %>% 
+  group_by(margin_flag_2018) %>% 
+  summarise(members = n())  
 
-
-
-
-
-
+#same as the first except the filter is for_impeachment = YES instead of party = D, and replacing the group_by with margin_flag_2018.
 
 ```
 
@@ -134,13 +128,13 @@ impeach %>%
 
 ```{r}
 
-  
+#I want to look at group weather a member was for/against impeachment and if the state was above/below the national average percentage of non-white people and then see the mean percentage that voted for Obama
 
+impeach %>% 
+  group_by(for_impeachment, pct_nonwhite_compared_to_national) %>%
+  summarise(obama_percent = mean(obama_percent, na.rm = TRUE))  
 
-
-
-
-
+#this is very similar code to question 4 or 5, but including group_by variables for for_impeachment and pct_nonwhite_compared_to_national, and the summarize being the mean of obama_percent.
 
 ```
 
@@ -150,13 +144,11 @@ Use the mutate() function to create two new columns: one that extracts the year 
 
 ```{r}
 
-  
+impeach %>% 
+  mutate(year = year(date_announced),
+         month = month(date_announced))  
 
-
-
-
-
-
+#using the year and month functions to extract the year and month respectively, then using the mutate function to append both sets of info to the data.
 
 ```
 
@@ -164,15 +156,13 @@ Use the mutate() function to create two new columns: one that extracts the year 
 
 ```{r}
 
-  
+impeach %>% 
+  filter(for_impeachment == "YES") %>%
+  mutate(year = year(date_announced),
+         month = month(date_announced)) %>% 
+  group_by(month) %>% 
+  summarise(members = n())
 
-
-
-
-
-
+#using the filter already used earlier, then the mutation function made in the previous question, the data can then be group_by the month made in the mutate.
 
 ```
-
-
-
