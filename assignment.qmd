@@ -44,10 +44,11 @@ Write your code using grouping in the chunks below to help answer the following 
 
 ```{r}
 
+impeach %>% 
+  group_by(for_impeachment) %>% 
+  summarise(members = n())
 
-
-
-
+#used group_by in order to categorize each row of data based on their results in for_impeachment, then used summarize to display the value (amount of rows/members) in each category titled members
 
 ```
 
@@ -57,14 +58,12 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 
 ```{r}
 
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(for_impeachment, gdp_above_national) %>% 
+  summarise(members = n())
 
-
-
-
-
-
-
-
+#similar to the previous except now featuring to pairs to be categorized; first for_impeachment (as before) and then gdp_above_national. Once again concluded with being summarized into data titled members. I included a filter by party because I briefly forgot this was just Democratic house members, but it didn't hurt to have so I have left it.
 
 ```
 
@@ -72,9 +71,12 @@ You'll want to ensure you do the grouping on both columns together, e.g. `group_
 
 ```{r}
 
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(for_impeachment, pct_bachelors_compared_to_national) %>% 
+  summarise(members = n())
 
-
-
+#exact same as previous but replacing gdp_above_national with pct_bachelors_compared_to_national
 
 
 
@@ -91,13 +93,12 @@ In other words, you want to end up with the calculated mean for what that percen
 
 ```{r}
 
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(for_impeachment) %>%
+  summarise(pct_bachelors = mean(pct_bachelors, na.rm = TRUE))
 
-
-
-
-
-
-
+#same as question 1 until the summarize. Instead of the value being the number of rows of data in a category it calculates the mean of pct_bachelors in both categories.
 
 ```
 
@@ -106,14 +107,12 @@ The relevant column for that is `trump_percent`.
 
 ```{r}
 
+impeach %>% 
+  filter(party == "D") %>% 
+  group_by(for_impeachment) %>%
+  summarise(trump_percent = mean(trump_percent, na.rm = TRUE))
 
-
-
-
-
-
-
-
+#same as previous but replace pct_bachelors in summarize with trump_percent.
 
 ```
 
